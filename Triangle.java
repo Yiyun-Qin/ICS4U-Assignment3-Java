@@ -13,22 +13,6 @@ public class Triangle {
   private static int side1;
   private static int side2;
   private static int side3;
-  private static int numPerimeter;
-  public static double numSemiperimeter;
-  public static double numArea;
-  private static double side1Angle;
-  private static double side2Angle;
-  private static double side3Angle;
-  private static ArrayList<Double> radian = new ArrayList<Double>();
-  public static double numRadian;
-  public static String type;
-  private static double height1;
-  private static double height2;
-  private static double height3;
-  private static ArrayList<Double> listHeight = new ArrayList<Double>();
-  public static double numHeight;
-  public static double numInnerCircleRadius;
-  public static double numCircumsicleRadius;
 
   // constructor
   /**
@@ -63,8 +47,9 @@ public class Triangle {
    * The perimeter() method, calculates the perimeter of the triangle.
    *
    */
-  private static void perimeter() {
-    numPerimeter = side1 + side2 + side3;
+  private static double perimeter() {
+    double numPerimeter = side1 + side2 + side3;
+    return numPerimeter;
   }
 
   // The semiPerimeter() method
@@ -73,8 +58,7 @@ public class Triangle {
    *
    */
   public static double semiPerimeter() {
-    perimeter();
-    numSemiperimeter = numPerimeter / 2 * 1.0000;
+    double numSemiperimeter = perimeter() / 2 * 1.0000;
     if (isValid()) {
       return numSemiperimeter;
     } else {
@@ -104,12 +88,12 @@ public class Triangle {
    */
   public static double area() {
     if (isValid()) {
-      numArea = Math.sqrt(
-        numSemiperimeter
-        * (numSemiperimeter - side1)
-        * (numSemiperimeter - side2)
-        * (numSemiperimeter - side3)
-      ) * 1.0000;
+      double numArea = Math.sqrt(
+          semiPerimeter()
+          * (semiPerimeter() - side1)
+          * (semiPerimeter() - side2)
+          * (semiPerimeter() - side3)
+        ) * 1.0000;
       return numArea;
     } else {
       return -1.0000;
@@ -122,25 +106,27 @@ public class Triangle {
    *
    */
   public static double angle(int angleNumber) {
+    ArrayList<Double> radian = new ArrayList<Double>();
+    double numRadian;
     if (isValid()) {
-      side1Angle = Math.acos(
-        (Math.pow(side2, 2)
-         + Math.pow(side3, 2)
-         - Math.pow(side1, 2))
-        / (2 * side2 * side3)
-      ) * 1.0000;
-      side2Angle = Math.acos(
-        (Math.pow(side1, 2)
-         + Math.pow(side3, 2)
-         - Math.pow(side2, 2))
-        / (2 * side1 * side3)
-      ) * 1.0000;
-      side3Angle = Math.acos(
-        (Math.pow(side1, 2)
-         + Math.pow(side2, 2)
-         - Math.pow(side3, 2))
-        / (2 * side1 * side2)
-      ) * 1.0000;
+      double side1Angle = Math.acos(
+          (Math.pow(side2, 2)
+           + Math.pow(side3, 2)
+           - Math.pow(side1, 2))
+          / (2 * side2 * side3)
+        ) * 1.0000;
+      double side2Angle = Math.acos(
+          (Math.pow(side1, 2)
+           + Math.pow(side3, 2)
+           - Math.pow(side2, 2))
+          / (2 * side1 * side3)
+        ) * 1.0000;
+      double side3Angle = Math.acos(
+          (Math.pow(side1, 2)
+           + Math.pow(side2, 2)
+           - Math.pow(side3, 2))
+          / (2 * side1 * side2)
+        ) * 1.0000;
       radian.add(side1Angle);
       radian.add(side2Angle);
       radian.add(side3Angle);
@@ -166,6 +152,7 @@ public class Triangle {
    *
    */
   public static String getType() {
+    String type;
     final double right1 = Math.sqrt(
                     Math.pow(side2, 2)
                     + Math.pow(side3, 2));
@@ -205,10 +192,12 @@ public class Triangle {
    *
    */
   public static double height(int heightNumber) {
+    ArrayList<Double> listHeight = new ArrayList<Double>();
+    double numHeight;
     if (isValid()) {
-      height1 = numArea * 2 / side1 * 1.0000;
-      height2 = numArea * 2 / side2 * 1.0000;
-      height3 = numArea * 2 / side3 * 1.0000;
+      double height1 = area() * 2 / side1 * 1.0000;
+      double height2 = area() * 2 / side2 * 1.0000;
+      double height3 = area() * 2 / side3 * 1.0000;
       listHeight.add(height1);
       listHeight.add(height2);
       listHeight.add(height3);
@@ -236,7 +225,7 @@ public class Triangle {
    */
   public static double innerCircleRadius() {
     if (isValid()) {
-      numInnerCircleRadius = numArea / numSemiperimeter * 1.0000;
+      double numInnerCircleRadius = area() / semiPerimeter() * 1.0000;
       return numInnerCircleRadius;
     } else {
       return -1.0000;
@@ -251,7 +240,7 @@ public class Triangle {
    */
   public static double circumsicleRadius() {
     if (isValid()) {
-      numCircumsicleRadius = side1 / (2 * Math.sin(side1Angle)) * 1.0000;
+      double numCircumsicleRadius = side1 / (2 * Math.sin(angle(1))) * 1.0000;
       return numCircumsicleRadius;
     } else {
       return -1.0000;
